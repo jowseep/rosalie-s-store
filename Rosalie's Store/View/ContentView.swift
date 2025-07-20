@@ -8,25 +8,27 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedOption: Option? = nil
+    @State private var selectedOption: Option?
     
     var body: some View {
         NavigationSplitView {
             List(Option.allCases, selection: $selectedOption) { option in
-                Label(option.title, systemImage: "house")
+                NavigationLink(value: option) {
+                    Label(option.title, systemImage: option.icon)
+                }
             }
             .navigationTitle("Menu")
         } detail: {
             if let option = selectedOption {
                 switch option {
                 case .borrower:
-                    Text("Borrower")
+                    BorrowerDashboard()
                 case .debt:
-                    Text("Debt")
+                    DebtDashboard()
                 case .payment:
-                    Text("Payment")
+                    PaymentDashboard()
                 case .product:
-                    Text("Product")
+                    ProductDashboard()
                 }
             } else {
                 Text("Welcome to Rosalie's Store")

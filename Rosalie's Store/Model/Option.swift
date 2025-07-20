@@ -24,4 +24,13 @@ enum Option : String, CaseIterable, Identifiable {
         case .product: return "Product"
         }
     }
+    
+    var icon: String {
+        switch self {
+        case .borrower: return "person"
+        case .debt: return "envelope.stack"
+        case .payment: return "pesosign"
+        case .product: return "cart"
+        }
+    }
 }
