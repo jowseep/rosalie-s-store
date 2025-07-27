@@ -12,27 +12,27 @@ struct ContentView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(Option.allCases, selection: $selectedOption) { option in
-                NavigationLink(value: option) {
-                    Label(option.title, systemImage: option.icon)
+            VStack {
+                List(Option.allCases, selection: $selectedOption) { option in
+                    NavigationLink(value: option) {
+                        Label(option.title, systemImage: option.icon)
+                    }
                 }
+                .navigationTitle("Menu")
+                
+                Button(action: {
+                    print("Temporary")
+                }) {
+                    Label("Settings", systemImage: "gear")
+                        .padding(.vertical, 8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .buttonStyle(PlainButtonStyle()) // Optional for consistent look
+                        .padding(.horizontal)
+                        .padding(.bottom)
             }
-            .navigationTitle("Menu")
         } detail: {
-            if let option = selectedOption {
-                switch option {
-                case .borrower:
-                    BorrowerDashboard()
-                case .debt:
-                    DebtDashboard()
-                case .payment:
-                    PaymentDashboard()
-                case .product:
-                    ProductDashboard()
-                }
-            } else {
-                Text("Welcome to Rosalie's Store")
-            }
+            MenuContext(selectedOption: $selectedOption)
         }
     }
 }

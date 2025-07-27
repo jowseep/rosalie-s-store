@@ -27,10 +27,10 @@ enum Option : String, CaseIterable, Identifiable {
     
     var icon: String {
         switch self {
-        case .borrower: return "person"
-        case .debt: return "envelope.stack"
+        case .borrower: return "person.2"
+        case .debt: return "creditcard"
         case .payment: return "pesosign"
-        case .product: return "cart"
+        case .product: return "cube.box"
         }
     }
 }
