@@ -21,4 +21,5 @@ struct ItemDetailView: View {
 
 #Preview {
     ItemDetailView()
+        .environment(NavigationContext())
 }

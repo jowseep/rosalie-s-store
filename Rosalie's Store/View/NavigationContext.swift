@@ -14,13 +14,7 @@ class NavigationContext {
     
     var sidebarTitle: String = "Menu"
     
-    var itemListTitle: String {
-        if let selectedMenu {
-            selectedMenu.title
-        } else {
-            ""
-        }
-    }
+    var itemListTitle: String { selectedMenu?.title ?? "" }
     
     init(selectedMenu: MainMenu? = nil, selectedItem: SelectedItem? = nil) {
         self.selectedMenu = selectedMenu

@@ -11,8 +11,8 @@ struct ItemListView: View {
     @Environment(NavigationContext.self) private var navContext
     
     var body: some View {
-        @Bindable var navContext = navContext
-        switch navContext.selectedMenu {
+        @Bindable var context = navContext
+        switch context.selectedMenu {
         case .borrower:
             BorrowerListView()
         case .payment:
