@@ -7,14 +7,14 @@
 
 import Foundation
 
-enum Option : String, CaseIterable, Identifiable {
+enum MainMenu : String, CaseIterable, Identifiable {
     case borrower
     case debt
     case payment
     case product
     
     //var id: Self { self } // Conforming to Identifiable
-    var id: String {rawValue}
+    var id: String { rawValue }
     
     var title: String {
         switch self {

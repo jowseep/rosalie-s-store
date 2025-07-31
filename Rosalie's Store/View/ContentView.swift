@@ -8,31 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedOption: Option?
-    
+    @State private var navContext = NavigationContext()
     var body: some View {
-        NavigationSplitView {
-            VStack {
-                List(Option.allCases, selection: $selectedOption) { option in
-                    NavigationLink(value: option) {
-                        Label(option.title, systemImage: option.icon)
-                    }
-                }
-                .navigationTitle("Menu")
-                
-                Button(action: {
-                    print("Temporary")
-                }) {
-                    Label("Settings", systemImage: "gear")
-                        .padding(.vertical, 8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .buttonStyle(PlainButtonStyle()) // Optional for consistent look
-                        .padding(.horizontal)
-                        .padding(.bottom)
+        NavigationSplitView() {
+            MenuList(navContext: navContext)
+                .navigationTitle(navContext.sidebarTitle)
+        } content: {
+            ItemListView()
+                .environment(navContext)
+                .navigationTitle(navContext.itemListTitle)
+        }
+        detail: {
+            ItemDetailView()
+                .environment(navContext)
+        }
+    }
+}
+
+private struct MenuList: View {
+    @Bindable var navContext: NavigationContext
+    var body: some View {
+        List(MainMenu.allCases, selection: $navContext.selectedMenu) { option in
+            NavigationLink(value: option) {
+                Label(option.title, systemImage: option.icon)
             }
-        } detail: {
-            MenuContext(selectedOption: $selectedOption)
         }
     }
 }
