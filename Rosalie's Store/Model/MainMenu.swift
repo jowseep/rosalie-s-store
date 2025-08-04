@@ -9,8 +9,7 @@ import Foundation
 
 enum MainMenu : String, CaseIterable, Identifiable {
     case borrower
-    case debt
-    case payment
+    case transaction
     case product
     
     //var id: Self { self } // Conforming to Identifiable
@@ -18,19 +17,17 @@ enum MainMenu : String, CaseIterable, Identifiable {
     
     var title: String {
         switch self {
-        case .borrower: return "Borrower"
-        case .debt: return "Debt"
-        case .payment: return "Payment"
-        case .product: return "Product"
+        case .borrower: return "Borrowers"
+        case .transaction: return "Transactions"
+        case .product: return "Products"
         }
     }
     
     var icon: String {
         switch self {
         case .borrower: return "person.2"
-        case .debt: return "creditcard"
-        case .payment: return "pesosign"
         case .product: return "cube.box"
+        case .transaction: return "pesosign"
         }
     }
 }

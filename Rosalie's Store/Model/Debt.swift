@@ -8,8 +8,8 @@
 import Foundation
 
 struct Debt : Identifiable, Hashable {
-    let id: UUID
-    var borrowerId: UUID
+    let id: Int
+    var borrowerId: Int
     var amount: Double
     var date: Date
     var notes: String?

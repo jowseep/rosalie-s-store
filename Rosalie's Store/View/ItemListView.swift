@@ -15,10 +15,8 @@ struct ItemListView: View {
         switch context.selectedMenu {
         case .borrower:
             BorrowerListView()
-        case .payment:
-            PaymentListView()
-        case .debt:
-            DebtListView()
+        case .transaction:
+            TransactionListView()
         case .product:
             ProductListView()
         default:

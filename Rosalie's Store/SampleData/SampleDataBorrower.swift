@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct SampleDataBorrower : Hashable {
+struct SampleDataBorrower {
     let borrowers: [Borrower] = [
-        Borrower(firstName: "Juan", lastName: "Dela Cruz"),
-        Borrower(firstName: "Maria", lastName: "Santos"),
-        Borrower(firstName: "Jose", lastName: "Rizal"),
-        Borrower(firstName: "Ana", lastName: "Reyes"),
-        Borrower(firstName: "Pedro", lastName: "Garcia"),
-        Borrower(firstName: "Luisa", lastName: "Fernandez"),
-        Borrower(firstName: "Carlos", lastName: "Torres"),
-        Borrower(firstName: "Isabel", lastName: "Lopez"),
-        Borrower(firstName: "Miguel", lastName: "Domingo"),
-        Borrower(firstName: "Rosa", lastName: "Bautista")
+        Borrower(id: 1, firstName: "Juan", lastName: "Dela Cruz"),
+        Borrower(id: 2, firstName: "Maria", lastName: "Santos"),
+        Borrower(id: 3, firstName: "Jose", lastName: "Rizal"),
+        Borrower(id: 4, firstName: "Ana", lastName: "Reyes"),
+        Borrower(id: 5, firstName: "Pedro", lastName: "Garcia"),
+        Borrower(id: 6, firstName: "Luisa", lastName: "Fernandez"),
+        Borrower(id: 7, firstName: "Carlos", lastName: "Torres"),
+        Borrower(id: 8, firstName: "Isabel", lastName: "Lopez"),
+        Borrower(id: 9, firstName: "Miguel", lastName: "Domingo"),
+        Borrower(id: 10, firstName: "Rosa", lastName: "Bautista")
     ]
 }

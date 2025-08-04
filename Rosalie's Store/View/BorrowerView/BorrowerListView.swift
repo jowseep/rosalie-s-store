@@ -9,11 +9,13 @@ import SwiftUI
 
 struct BorrowerListView: View {
     @Environment(NavigationContext.self) private var navContext
-    
+    @State private var selection: Borrower?
     var body: some View {
         @Bindable var navContext = navContext
-        List(SampleDataBorrower().borrowers) {
-            borrower in Text(borrower.fullName)
+        List(SampleDataBorrower().borrowers, selection: $selection) { borrower in
+            NavigationLink(value: borrower) {
+                Text(borrower.fullName)
+            }
         }
     }
 }

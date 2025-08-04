@@ -29,7 +29,9 @@ private struct MenuList: View {
     @Bindable var navContext: NavigationContext
     var body: some View {
         List(MainMenu.allCases, selection: $navContext.selectedMenu) { option in
+            NavigationLink(value: option) {
                 Label(option.title, systemImage: option.icon)
+            }
         }
     }
 }

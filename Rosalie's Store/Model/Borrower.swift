@@ -8,7 +8,7 @@
 import Foundation
 
 struct Borrower : Identifiable, Hashable {
-    let id = UUID()
+    let id: Int
     var firstName: String
     var lastName: String
     

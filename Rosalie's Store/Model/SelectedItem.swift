@@ -8,8 +8,8 @@
 import Foundation
 
 enum SelectedItem : Hashable {
-    case borrower(UUID)
-    case debt(UUID)
-    case payment(UUID)
-    case product(UUID)
+    case borrower(Int)
+    case debt(Int)
+    case payment(Int)
+    case product(Int)
 }
