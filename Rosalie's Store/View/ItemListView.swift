@@ -9,16 +9,18 @@ import SwiftUI
 
 struct ItemListView: View {
     @Environment(NavigationContext.self) private var navContext
-    
     var body: some View {
         @Bindable var context = navContext
         switch context.selectedMenu {
         case .borrower:
             BorrowerListView()
+                .environment(context)
         case .transaction:
             TransactionListView()
+                .environment(context)
         case .product:
             ProductListView()
+                .environment(context)
         default:
             Text("Select from menu")
         }

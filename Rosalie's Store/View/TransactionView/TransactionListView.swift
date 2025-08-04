@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct TransactionListView: View {
-    @State private var selection: TransactionType?
+    @Environment(NavigationContext.self) private var navContext
     var body: some View {
-        List(TransactionType.allCases, selection: $selection) { type in
-            NavigationLink(value: type) {
+        @Bindable var context = navContext
+        List(TransactionType.allCases, selection: $context.selectedItem) { type in
+            NavigationLink(value: SelectedItem.transaction(type)) {
                 Text(type.title)
             }
         }
@@ -20,4 +21,5 @@ struct TransactionListView: View {
 
 #Preview {
     TransactionListView()
+        .environment(NavigationContext())
 }

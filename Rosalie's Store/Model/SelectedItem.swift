@@ -9,7 +9,6 @@ import Foundation
 
 enum SelectedItem : Hashable {
     case borrower(Int)
-    case debt(Int)
-    case payment(Int)
+    case transaction(TransactionType)
     case product(Int)
 }
