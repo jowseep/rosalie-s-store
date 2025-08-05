@@ -11,24 +11,24 @@ struct ContentView: View {
     @State private var navContext = NavigationContext()
     var body: some View {
         NavigationSplitView() {
-            MenuList(navContext: navContext)
+            MenuList()
                 .navigationTitle(navContext.sidebarTitle)
         } content: {
             ItemListView()
-                .environment(navContext)
                 .navigationTitle(navContext.itemListTitle)
         }
         detail: {
             ItemDetailView()
-                .environment(navContext)
         }
+        .environment(navContext)
     }
 }
 
 private struct MenuList: View {
-    @Bindable var navContext: NavigationContext
+    @Environment(NavigationContext.self) private var navContext
     var body: some View {
-        List(MainMenu.allCases, selection: $navContext.selectedMenu) { option in
+        @Bindable var context = navContext
+        List(MainMenu.allCases, selection: $context.selectedMenu) { option in
             NavigationLink(value: option) {
                 Label(option.title, systemImage: option.icon)
             }

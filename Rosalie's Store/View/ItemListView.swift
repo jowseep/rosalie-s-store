@@ -14,13 +14,10 @@ struct ItemListView: View {
         switch context.selectedMenu {
         case .borrower:
             BorrowerListView()
-                .environment(context)
         case .transaction:
             TransactionListView()
-                .environment(context)
         case .product:
             ProductListView()
-                .environment(context)
         default:
             Text("Select from menu")
         }
