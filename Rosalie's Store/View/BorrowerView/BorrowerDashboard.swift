@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct BorrowerDashboard: View {
+    var id: Int;
     var body: some View {
-        Text("Welcome to Dashboard!")
+        Text("Welcome to borrower: \(id)")
     }
 }
 
 #Preview {
-    BorrowerDashboard()
+    BorrowerDashboard(id: 1)
 }

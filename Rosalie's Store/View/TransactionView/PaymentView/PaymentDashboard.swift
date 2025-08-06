@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PaymentDashboard: View {
     var body: some View {
-        Text("Welcome to Payment!")
+        Text("Welcome to Payment Dashboard!")
     }
 }
 

@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ProductDashboard: View {
+    var id: Int
     var body: some View {
-        Text("Welcome to Product!")
+        Text("Product with id \(id)!")
     }
 }
 
 #Preview {
-    ProductDashboard()
+    ProductDashboard(id: 1)
 }

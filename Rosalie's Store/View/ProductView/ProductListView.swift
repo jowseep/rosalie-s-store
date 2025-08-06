@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProductListView: View {
     var body: some View {
-        Text("Click to add product")
+        Text("Please select a different menu.")
     }
 }
 
