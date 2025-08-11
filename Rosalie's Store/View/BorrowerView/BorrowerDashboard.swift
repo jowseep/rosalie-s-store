@@ -10,7 +10,19 @@ import SwiftUI
 struct BorrowerDashboard: View {
     var id: Int;
     var body: some View {
-        Text("Welcome to borrower: \(id)")
+        VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Jessa Zaragoza")
+                        .font(.largeTitle.bold())
+                    Text("Current debt: P5,900.00")
+                        .font(.subheadline)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
+        .padding(.leading)
     }
 }
 
