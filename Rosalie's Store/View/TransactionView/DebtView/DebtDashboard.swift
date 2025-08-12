@@ -9,7 +9,6 @@ import SwiftUI
 
 struct DebtDashboard: View {
     var body: some View {
-        Text("Welcome to Debt Dashboard!")
     }
 }
 

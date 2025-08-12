@@ -8,19 +8,32 @@
 import SwiftUI
 
 struct BorrowerDashboard: View {
+    @State private var selectedTab: Int = 0
     var id: Int;
     var body: some View {
         VStack {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Jessa Zaragoza")
-                        .font(.largeTitle.bold())
-                    Text("Current debt: P5,900.00")
-                        .font(.subheadline)
-                    Spacer()
-                }
-                Spacer()
+            VStack {
+                Text("Jessa Zaragoza")
+                    .font(.largeTitle.bold())
+                Text("Current debt: P5,900.00")
+                    .font(.subheadline)
             }
+            .padding(.bottom)
+            
+            Picker("Select Tab", selection: $selectedTab) {
+                Text("Debts").tag(0)
+                Text("Payments").tag(1)
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+            
+            if selectedTab == 0 {
+                DebtDashboard()
+            } else {
+                PaymentDashboard()
+            }
+            
+            Spacer()
         }
         .padding(.leading)
     }
