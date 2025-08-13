@@ -15,7 +15,7 @@ struct BorrowerDashboard: View {
             VStack {
                 Text("Jessa Zaragoza")
                     .font(.largeTitle.bold())
-                Text("Current debt: P5,900.00")
+                Text("Current debt: P341.00")
                     .font(.subheadline)
             }
             .padding(.bottom)
