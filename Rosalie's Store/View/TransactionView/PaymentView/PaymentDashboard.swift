@@ -14,6 +14,7 @@ struct PaymentDashboard: View {
                     TableColumn("Date", value: \.familyName)
                     TableColumn("Reference", value: \.emailAddress)
                 }
+
     }
 }
 

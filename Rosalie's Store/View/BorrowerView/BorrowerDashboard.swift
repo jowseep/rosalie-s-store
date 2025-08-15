@@ -25,7 +25,8 @@ struct BorrowerDashboard: View {
                 Text("Payments").tag(1)
             }
             .pickerStyle(.segmented)
-            .padding(.horizontal)
+            .frame(width: UIScreen.main.bounds.width / 2)
+            .padding(.bottom)
             
             if selectedTab == 0 {
                 DebtDashboard()
@@ -35,7 +36,7 @@ struct BorrowerDashboard: View {
             
             Spacer()
         }
-        .padding(.leading)
+        .padding()
     }
 }
 

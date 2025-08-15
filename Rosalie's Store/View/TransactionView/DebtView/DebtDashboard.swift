@@ -9,11 +9,14 @@ import SwiftUI
 
 struct DebtDashboard: View {
     var body: some View {
-        Table(people) {
-                    TableColumn("Amount", value: \.givenName)
-                    TableColumn("Date", value: \.familyName)
-                    TableColumn("Notes", value: \.emailAddress)
-                }
+        VStack {
+            Table(people) {
+                TableColumn("Amount", value: \.givenName)
+                TableColumn("Date", value: \.familyName)
+                TableColumn("Notes", value: \.emailAddress)
+            }
+        }
+        
     }
 }
 
