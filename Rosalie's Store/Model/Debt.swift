@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct Debt : Identifiable, Hashable {
-    let id: Int
-    var borrowerId: Int
-    var amount: Double
-    var date: Date
+class Debt : Transaction {
     var notes: String?
     
+    init(totalAmount: Double, notes: String? = nil) {
+        self.notes = notes
+        super.init(totalAmount: totalAmount, type: .debt)
+    }
 }

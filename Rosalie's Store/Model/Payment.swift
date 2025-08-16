@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class Payment : Transaction {
+    var refNumber: String?
+    
+    init(totalAmount: Double, refNumber: String?) {
+        self.refNumber = refNumber
+        super.init(totalAmount: totalAmount, type: .payment)
+    }
+}

@@ -16,7 +16,8 @@ struct BorrowerDashboard: View {
                 Text("Jessa Zaragoza")
                     .font(.largeTitle.bold())
                 Text("Current debt: P341.00")
-                    .font(.subheadline)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
             }
             .padding(.bottom)
             
@@ -25,7 +26,7 @@ struct BorrowerDashboard: View {
                 Text("Payments").tag(1)
             }
             .pickerStyle(.segmented)
-            .frame(width: UIScreen.main.bounds.width / 2)
+            .frame(width: UIScreen.main.bounds.width / 3)
             .padding(.bottom)
             
             if selectedTab == 0 {
@@ -33,10 +34,7 @@ struct BorrowerDashboard: View {
             } else {
                 PaymentDashboard()
             }
-            
-            Spacer()
         }
-        .padding()
     }
 }
 

@@ -9,12 +9,21 @@ import SwiftUI
 
 struct PaymentDashboard: View {
     var body: some View {
-        Table(people) {
-                    TableColumn("Amount", value: \.givenName)
-                    TableColumn("Date", value: \.familyName)
-                    TableColumn("Reference", value: \.emailAddress)
+        List {
+            Section(TransactionType.payment.title) {
+                ForEach(people) { payment in
+                    HStack {
+                        Text("₱\(payment.givenName)")
+                        Spacer()
+                        Text(payment.familyName)
+                            .foregroundStyle(.secondary)
+                    }
                 }
-
+                Button("Add Payment", systemImage: "plus") {
+                    print("Adding debt")
+                }
+            }
+        }
     }
 }
 
@@ -30,7 +39,13 @@ struct Payments: Identifiable {
 
 
 private var people = [
-    Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931")
+    Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931"),
+    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
+    Payments(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
+    Payments(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
+    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
+    Payments(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
+    Payments(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
 ]
 
 #Preview {
