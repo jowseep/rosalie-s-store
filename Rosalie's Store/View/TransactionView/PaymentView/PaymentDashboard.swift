@@ -11,7 +11,7 @@ struct PaymentDashboard: View {
     var body: some View {
         List {
             Section(TransactionType.payment.title) {
-                ForEach(people) { payment in
+                ForEach(payments) { payment in
                     HStack {
                         Text("₱\(payment.givenName)")
                         Spacer()
@@ -38,7 +38,7 @@ struct Payments: Identifiable {
 }
 
 
-private var people = [
+private var payments = [
     Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931"),
     Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
     Payments(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),

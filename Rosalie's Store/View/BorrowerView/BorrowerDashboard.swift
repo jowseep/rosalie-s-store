@@ -11,32 +11,67 @@ struct BorrowerDashboard: View {
     @State private var selectedTab: Int = 0
     var id: Int;
     var body: some View {
-        VStack {
+        List {
             VStack {
+                Image(systemName: "person.crop.circle") // avatar
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 80)
+                                    .foregroundStyle(.blue) // can customize color
+                                    .padding(.bottom, 4)
+
                 Text("Jessa Zaragoza")
-                    .font(.largeTitle.bold())
-                Text("Current debt: P341.00")
-                    .font(.headline)
+                    .font(.title.bold())
+                Text("Current debt: ₱341.00")
                     .foregroundStyle(.secondary)
             }
-            .padding(.bottom)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
             
-            Picker("Select Tab", selection: $selectedTab) {
-                Text("Debts").tag(0)
-                Text("Payments").tag(1)
+            Section(TransactionType.debt.title) {
+                ForEach(debts) { debt in
+                    HStack {
+                        Text("₱\(String(format: "%.2f", debt.totalAmount))")
+                        Spacer()
+                        Text("\(debt.formattedDate)")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Button("Add Debt", systemImage: "plus") {
+                    print("Adding debt")
+                }
             }
-            .pickerStyle(.segmented)
-            .frame(width: UIScreen.main.bounds.width / 3)
-            .padding(.bottom)
             
-            if selectedTab == 0 {
-                DebtDashboard()
-            } else {
-                PaymentDashboard()
+            Section(TransactionType.payment.title) {
+                ForEach(payments) { payment in
+                    HStack {
+                        Text("₱\(payment.givenName)")
+                        Spacer()
+                        Text(payment.familyName)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                Button("Add Payment", systemImage: "plus") {
+                    print("Adding debt")
+                }
             }
         }
     }
 }
+
+private var debts = [
+    Debt(id: 1, totalAmount: 90, notes: "Sabon, Shampoo"),
+    Debt(id: 2, totalAmount: 55, notes: "Del, Ariel"),
+    Debt(id: 3, totalAmount: 111, notes: "Uling, Toothpaste"),
+    Debt(id: 4, totalAmount: 149, notes: "Load, Surf"),
+    Debt(id: 5, totalAmount: 56, notes: "Kape, Sugar")
+]
+
+private var payments = [
+    Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931"),
+    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo")
+]
 
 #Preview {
     BorrowerDashboard(id: 1)
