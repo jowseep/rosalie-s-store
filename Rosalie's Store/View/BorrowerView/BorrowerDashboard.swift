@@ -29,6 +29,8 @@ struct BorrowerDashboard: View {
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
             
+            // We can maybe iterate through TransactionType so we won't have to repeat the section
+            
             Section(TransactionType.debt.title) {
                 ForEach(debts) { debt in
                     HStack {
@@ -46,9 +48,9 @@ struct BorrowerDashboard: View {
             Section(TransactionType.payment.title) {
                 ForEach(payments) { payment in
                     HStack {
-                        Text("₱\(payment.givenName)")
+                        Text("₱\(String(format: "%.2f", payment.totalAmount))")
                         Spacer()
-                        Text(payment.familyName)
+                        Text(payment.formattedDate)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -69,8 +71,8 @@ private var debts = [
 ]
 
 private var payments = [
-    Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931"),
-    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo")
+    Payment(id: 1, totalAmount: 270, refNumber: "RS1001"),
+    Payment(id: 2, totalAmount: 310, refNumber: "RS1002"),
 ]
 
 #Preview {
