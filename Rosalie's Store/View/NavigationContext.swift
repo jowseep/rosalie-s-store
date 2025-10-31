@@ -16,7 +16,7 @@ class NavigationContext {
     
     var itemListTitle: String { selectedMenu?.title ?? "" }
     
-    init(selectedMenu: MainMenu? = nil, selectedItem: SelectedItem? = nil) {
+    init(selectedMenu: MainMenu = MainMenu.borrower, selectedItem: SelectedItem? = nil) {
         self.selectedMenu = selectedMenu
         self.selectedItem = selectedItem
     }
