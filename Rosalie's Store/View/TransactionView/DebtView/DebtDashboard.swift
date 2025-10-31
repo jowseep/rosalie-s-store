@@ -20,6 +20,7 @@ struct DebtDashboard: View {
                     }
                 }
                 Button("Add Debt", systemImage: "plus") {
+                    //add the modal pop-up here
                     print("Adding debt")
                 }
             }

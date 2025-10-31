@@ -10,6 +10,8 @@ import SwiftUI
 struct BorrowerDashboard: View {
     @State private var selectedTab: Int = 0
     var id: Int;
+    
+    //get the id here from the borrower list and we get it from SampleDataBorrower
     var body: some View {
         List {
             VStack {
@@ -28,8 +30,6 @@ struct BorrowerDashboard: View {
             .frame(maxWidth: .infinity, alignment: .center)
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
-            
-            // We can maybe iterate through TransactionType so we won't have to repeat the section
             
             Section(TransactionType.debt.title) {
                 ForEach(debts) { debt in
