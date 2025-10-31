@@ -9,10 +9,10 @@ import SwiftUI
 
 struct BorrowerDashboard: View {
     @State private var selectedTab: Int = 0
-    var id: Int;
-    
-    //get the id here from the borrower list and we get it from SampleDataBorrower
+    var borrowerId: Int
+
     var body: some View {
+        var borrower = SampleDataBorrower().borrowers.first(where: { $0.id == borrowerId} )
         List {
             VStack {
                 Image(systemName: "person.crop.circle") // avatar
@@ -22,7 +22,7 @@ struct BorrowerDashboard: View {
                                     .foregroundStyle(.blue) // can customize color
                                     .padding(.bottom, 4)
 
-                Text("Jessa Zaragoza")
+                Text(borrower!.fullName)
                     .font(.title.bold())
                 Text("Current debt: ₱341.00")
                     .foregroundStyle(.secondary)
@@ -76,5 +76,5 @@ private var payments = [
 ]
 
 #Preview {
-    BorrowerDashboard(id: 1)
+    BorrowerDashboard(borrowerId: 1)
 }

@@ -24,7 +24,7 @@ private struct ItemDetailRouteView: View {
     var body: some View {
         switch item {
         case .borrower(let id):
-            BorrowerDashboard(id: id)
+            BorrowerDashboard(borrowerId: id)
         case .transaction(let type):
             TransactionRoute(type: type)
         case .product(let id):
