@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var navContext = NavigationContext()
+    @State private var productsStore = ProductsStore()
     var body: some View {
         NavigationSplitView() {
             MenuList()
@@ -21,6 +22,7 @@ struct ContentView: View {
             ItemDetailView()
         }
         .environment(navContext)
+        .environment(productsStore)
     }
 }
 
