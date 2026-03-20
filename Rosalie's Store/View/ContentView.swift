@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
     @State private var navContext = NavigationContext()
     @State private var productsStore = ProductsStore()
+    @State private var borrowersStore = BorrowersStore()
+    @State private var transactionsStore = TransactionsStore()
     var body: some View {
         NavigationSplitView() {
             MenuList()
@@ -23,6 +25,8 @@ struct ContentView: View {
         }
         .environment(navContext)
         .environment(productsStore)
+        .environment(borrowersStore)
+        .environment(transactionsStore)
     }
 }
 

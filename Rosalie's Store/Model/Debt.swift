@@ -10,8 +10,8 @@ import Foundation
 class Debt : Transaction {
     var notes: String?
     
-    init(id: Int, totalAmount: Double, notes: String? = nil) {
+    init(id: Int, totalAmount: Double, borrowerId: Int, notes: String? = nil) {
         self.notes = notes
-        super.init(id: id, totalAmount: totalAmount, type: .debt)
+        super.init(id: id, totalAmount: totalAmount, type: .debt, borrowerId: borrowerId)
     }
 }

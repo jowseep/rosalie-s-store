@@ -10,8 +10,8 @@ import Foundation
 class Payment : Transaction {
     var refNumber: String?
     
-    init(id: Int, totalAmount: Double, refNumber: String?) {
+    init(id: Int, totalAmount: Double, borrowerId: Int, refNumber: String?) {
         self.refNumber = refNumber
-        super.init(id: id, totalAmount: totalAmount, type: .payment)
+        super.init(id: id, totalAmount: totalAmount, type: .payment, borrowerId: borrowerId)
     }
 }

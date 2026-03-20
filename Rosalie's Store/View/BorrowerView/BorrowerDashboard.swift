@@ -63,18 +63,19 @@ struct BorrowerDashboard: View {
 }
 
 private var debts = [
-    Debt(id: 1, totalAmount: 90, notes: "Sabon, Shampoo"),
-    Debt(id: 2, totalAmount: 55, notes: "Del, Ariel"),
-    Debt(id: 3, totalAmount: 111, notes: "Uling, Toothpaste"),
-    Debt(id: 4, totalAmount: 149, notes: "Load, Surf"),
-    Debt(id: 5, totalAmount: 56, notes: "Kape, Sugar")
+    Debt(id: 1, totalAmount: 90, borrowerId: 1, notes: "Sabon, Shampoo"),
+    Debt(id: 2, totalAmount: 55, borrowerId: 1, notes: "Del, Ariel"),
+    Debt(id: 3, totalAmount: 111, borrowerId: 1, notes: "Uling, Toothpaste"),
+    Debt(id: 4, totalAmount: 149, borrowerId: 1, notes: "Load, Surf"),
+    Debt(id: 5, totalAmount: 56, borrowerId: 1, notes: "Kape, Sugar")
 ]
 
 private var payments = [
-    Payment(id: 1, totalAmount: 270, refNumber: "RS1001"),
-    Payment(id: 2, totalAmount: 310, refNumber: "RS1002"),
+    Payment(id: 1, totalAmount: 270, borrowerId: 1, refNumber: "RS1001"),
+    Payment(id: 2, totalAmount: 310, borrowerId: 1, refNumber: "RS1002"),
 ]
 
 #Preview {
     BorrowerDashboard(borrowerId: 1)
 }
+

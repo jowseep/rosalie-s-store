@@ -12,12 +12,14 @@ class Transaction : Identifiable {
     var totalAmount: Double
     var date: Date
     var type: TransactionType
+    var borrowerId: Int
     
-    init(id: Int, totalAmount: Double, type: TransactionType) {
+    init(id: Int, totalAmount: Double, type: TransactionType, borrowerId: Int) {
         self.id = id
         self.totalAmount = totalAmount
         self.date = Date()
         self.type = type
+        self.borrowerId = borrowerId
     }
     
     var formattedDate: String {

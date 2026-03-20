@@ -2,7 +2,10 @@ import SwiftUI
 
 struct AddBorrowerView: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var name: String = ""
+    @Environment(BorrowersStore.self) private var borrowersStore
+
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -10,11 +13,20 @@ struct AddBorrowerView: View {
                 .font(.title)
                 .bold()
 
-            TextField("Enter name", text: $name)
+            TextField("First name", text: $firstName)
+                .textFieldStyle(.roundedBorder)
+
+            TextField("Last name", text: $lastName)
                 .textFieldStyle(.roundedBorder)
 
             Button("Save") {
-                // TODO: Hook up save action
+                let trimmedFirst = firstName.trimmingCharacters(in: .whitespacesAndNewlines)
+                let trimmedLast = lastName.trimmingCharacters(in: .whitespacesAndNewlines)
+                guard !trimmedFirst.isEmpty, !trimmedLast.isEmpty else { return }
+
+                let newId = (borrowersStore.borrowers.map { $0.id }.max() ?? 0) + 1
+                let borrower = Borrower(id: newId, firstName: trimmedFirst, lastName: trimmedLast)
+                borrowersStore.borrowers.append(borrower)
                 dismiss()
             }
             .buttonStyle(.borderedProminent)
@@ -28,4 +40,5 @@ struct AddBorrowerView: View {
 
 #Preview {
     AddBorrowerView()
+        .environment(BorrowersStore())
 }
