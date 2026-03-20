@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct PaymentDashboard: View {
+    @Environment(TransactionsStore.self) private var transactionsStore
+
     var body: some View {
         List {
             Section(TransactionType.payment.title) {
-                ForEach(payments) { payment in
+                ForEach(transactionsStore.transactions.filter { $0.type == .payment }) { payment in
                     HStack {
-                        Text("₱\(payment.givenName)")
+                        Text("₱\(String(format: "%.2f", payment.totalAmount))")
                         Spacer()
-                        Text(payment.familyName)
+                        Text(payment.formattedDate)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -27,27 +29,12 @@ struct PaymentDashboard: View {
     }
 }
 
-struct Payments: Identifiable {
-    let givenName: String
-    let familyName: String
-    let emailAddress: String
-    let id = UUID()
-
-
-    var fullName: String { givenName + " " + familyName }
-}
-
-
-private var payments = [
-    Payments(givenName: "509.00", familyName: "04/26/25", emailAddress: "1000931"),
-    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
-    Payments(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
-    Payments(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
-    Payments(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
-    Payments(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
-    Payments(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
-]
-
 #Preview {
-    PaymentDashboard()
+    let sampleStore = TransactionsStore(transactions: [
+        Transaction(id: 1, totalAmount: 270.0, type: .payment, borrowerId: 1),
+        Transaction(id: 2, totalAmount: 310.0, type: .payment, borrowerId: 2),
+        Transaction(id: 3, totalAmount: 90.0, type: .debt, borrowerId: 1)
+    ])
+    return PaymentDashboard()
+        .environment(sampleStore)
 }

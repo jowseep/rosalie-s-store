@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct DebtDashboard: View {
+    @Environment(TransactionsStore.self) private var transactionsStore
+
     var body: some View {
         List {
             Section(TransactionType.debt.title) {
-                ForEach(people) { payment in
+                ForEach(transactionsStore.transactions.filter { $0.type == .debt }) { debt in
                     HStack {
-                        Text("₱\(payment.givenName)")
+                        Text("₱\(String(format: "%.2f", debt.totalAmount))")
                         Spacer()
-                        Text(payment.familyName)
+                        Text(debt.formattedDate)
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -28,27 +30,12 @@ struct DebtDashboard: View {
     }
 }
 
-struct Person: Identifiable {
-    let givenName: String
-    let familyName: String
-    let emailAddress: String
-    let id = UUID()
-
-
-    var fullName: String { givenName + " " + familyName }
-}
-
-
-private var people = [
-    Person(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
-    Person(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
-    Person(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
-    Person(givenName: "85.00", familyName: "04/23/25", emailAddress: "Load, Egg"),
-    Person(givenName: "90.00", familyName: "04/26/25", emailAddress: "Sabon, Shampoo"),
-    Person(givenName: "55.00", familyName: "04/25/25", emailAddress: "Del, Ariel"),
-    Person(givenName: "111.00", familyName: "04/24/25", emailAddress: "Uling, Toothpaste"),
-]
-
 #Preview {
-    DebtDashboard()
+    let sampleStore = TransactionsStore(transactions: [
+        Transaction(id: 1, totalAmount: 90.0, type: .debt, borrowerId: 1),
+        Transaction(id: 2, totalAmount: 55.0, type: .debt, borrowerId: 2),
+        Transaction(id: 3, totalAmount: 120.0, type: .payment, borrowerId: 1)
+    ])
+    return DebtDashboard()
+        .environment(sampleStore)
 }
