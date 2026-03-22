@@ -25,15 +25,17 @@ struct ItemListView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    showingAddSheet = true
-                } label: {
-                    Image(systemName: "plus")
-                        .padding()
-                        .foregroundColor(.blue)
+            if context.selectedMenu != .transaction {
+                ToolbarItem(placement: .primaryAction) {
+                    Button {
+                        showingAddSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .padding()
+                            .foregroundColor(.blue)
+                    }
+                    .accessibilityLabel(addButtonAccessibilityLabel(for: context.selectedMenu))
                 }
-                .accessibilityLabel(addButtonAccessibilityLabel(for: context.selectedMenu))
             }
         }
         .sheet(isPresented: $showingAddSheet) {
@@ -45,8 +47,6 @@ struct ItemListView: View {
         switch menu {
         case .borrower:
             return "Add Borrower"
-        case .transaction:
-            return "Add Transaction"
         case .product:
             return "Add Product"
         default:
@@ -59,8 +59,6 @@ struct ItemListView: View {
         switch menu {
         case .borrower:
             AddBorrowerView()
-        case .transaction:
-            AddTransactionView()
         case .product:
             AddProductView()
         default:

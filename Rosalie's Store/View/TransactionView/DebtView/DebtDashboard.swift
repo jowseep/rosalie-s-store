@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DebtDashboard: View {
     @Environment(TransactionsStore.self) private var transactionsStore
+    @State private var showingAddSheet = false
 
     var body: some View {
         List {
@@ -22,10 +23,12 @@ struct DebtDashboard: View {
                     }
                 }
                 Button("Add Debt", systemImage: "plus") {
-                    //add the modal pop-up here
-                    print("Adding debt")
+                    showingAddSheet = true
                 }
             }
+        }
+        .sheet(isPresented: $showingAddSheet) {
+            AddDebtView()
         }
     }
 }

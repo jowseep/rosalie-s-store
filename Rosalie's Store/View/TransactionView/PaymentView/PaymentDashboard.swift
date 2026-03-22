@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PaymentDashboard: View {
     @Environment(TransactionsStore.self) private var transactionsStore
+    @State private var showingAddSheet = false
 
     var body: some View {
         List {
@@ -22,9 +23,12 @@ struct PaymentDashboard: View {
                     }
                 }
                 Button("Add Payment", systemImage: "plus") {
-                    print("Adding debt")
+                    showingAddSheet = true
                 }
             }
+        }
+        .sheet(isPresented: $showingAddSheet) {
+            AddPaymentView()
         }
     }
 }
