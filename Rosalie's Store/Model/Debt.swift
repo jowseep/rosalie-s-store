@@ -9,9 +9,11 @@ import Foundation
 
 class Debt : Transaction {
     var notes: String?
-    
-    init(id: Int, totalAmount: Double, borrowerId: Int, notes: String? = nil) {
+    var lineItems: [DebtLineItem]
+
+    init(id: Int, totalAmount: Double, borrowerId: Int, notes: String? = nil, lineItems: [DebtLineItem] = []) {
         self.notes = notes
+        self.lineItems = lineItems
         super.init(id: id, totalAmount: totalAmount, type: .debt, borrowerId: borrowerId)
     }
 }
