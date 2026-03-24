@@ -6,8 +6,12 @@ struct AddDebtView: View {
     @Environment(TransactionsStore.self) private var transactionsStore
     @Environment(ProductsStore.self) private var productsStore
 
-    @State private var selectedBorrowerId: Int? = nil
+    @State private var selectedBorrowerId: Int?
     @State private var showBorrowerPicker = false
+
+    init(initialBorrowerId: Int? = nil) {
+        _selectedBorrowerId = State(initialValue: initialBorrowerId)
+    }
     @State private var showProductsPicker = false
     @State private var quantities: [Int: Int] = [:]
     @State private var notes: String = ""
@@ -25,41 +29,35 @@ struct AddDebtView: View {
         quantities.values.contains { $0 > 0 }
     }
 
+    private var selectedBorrowerName: String? {
+        guard let id = selectedBorrowerId else { return nil }
+        return borrowersStore.borrowers.first { $0.id == id }?.fullName
+    }
+
+    private var selectedProductsLabel: String {
+        let count = quantities.values.filter { $0 > 0 }.count
+        return count == 0 ? "click search to find" : "\(count) products selected"
+    }
+
     var body: some View {
-        Form {
-            Section {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 24) {
                 Text("Add Debt")
                     .font(.title)
                     .bold()
-                    .listRowBackground(Color.clear)
-            }
+                    .frame(maxWidth: .infinity, alignment: .center)
 
-            if borrowersStore.borrowers.isEmpty {
-                Section {
-                    Text("No borrower added yet.")
-                        .foregroundStyle(.secondary)
-                }
-            } else {
-                Section {
+                HStack {
+                    Text("Borrower:").bold()
+                    Text(selectedBorrowerName ?? "click search to find")
+                        .italic(selectedBorrowerName == nil)
+                        .foregroundStyle(selectedBorrowerName == nil ? .secondary : .primary)
+                    Spacer()
                     Button {
                         showBorrowerPicker = true
                     } label: {
-                        HStack {
-                            Text("Borrower")
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            if let id = selectedBorrowerId,
-                               let borrower = borrowersStore.borrowers.first(where: { $0.id == id }) {
-                                Text(borrower.fullName)
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text("Select Borrower")
-                                    .foregroundStyle(.secondary)
-                            }
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
-                        }
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(.primary)
                     }
                 }
                 .sheet(isPresented: $showBorrowerPicker) {
@@ -68,26 +66,18 @@ struct AddDebtView: View {
                     }
                 }
 
-                Section {
+                HStack {
+                    Text("Products:").bold()
+                    let count = quantities.values.filter { $0 > 0 }.count
+                    Text(selectedProductsLabel)
+                        .italic(count == 0)
+                        .foregroundStyle(count == 0 ? .secondary : .primary)
+                    Spacer()
                     Button {
                         showProductsPicker = true
                     } label: {
-                        HStack {
-                            Text("Products")
-                                .foregroundStyle(.primary)
-                            Spacer()
-                            let selectedCount = quantities.values.filter { $0 > 0 }.count
-                            if selectedCount > 0 {
-                                Text("\(selectedCount) selected")
-                                    .foregroundStyle(.secondary)
-                            } else {
-                                Text("Select Products")
-                                    .foregroundStyle(.secondary)
-                            }
-                            Image(systemName: "chevron.right")
-                                .font(.caption)
-                                .foregroundStyle(.tertiary)
-                        }
+                        Image(systemName: "magnifyingglass")
+                            .foregroundStyle(.primary)
                     }
                 }
                 .sheet(isPresented: $showProductsPicker) {
@@ -96,50 +86,46 @@ struct AddDebtView: View {
                     }
                 }
 
-                Section {
-                    TextField("Notes (optional)", text: $notes)
-                }
+                TextField("Notes (optional)", text: $notes)
+                    .padding(10)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color(.systemGray4)))
 
-                Section {
-                    HStack {
-                        Text("Total")
-                            .font(.headline)
-                        Spacer()
-                        Text("₱\(computedTotal, specifier: "%.2f")")
-                            .font(.title2)
-                            .bold()
+                HStack {
+                    Text("Total").bold()
+                    Spacer()
+                    Text("₱\(computedTotal, specifier: "%.2f")").bold()
+                }
+                .padding(10)
+                .background(Color(.systemBackground), in: RoundedRectangle(cornerRadius: 8))
+
+                Button("Save") {
+                    guard let borrowerId = selectedBorrowerId,
+                          hasSelectedProducts else { return }
+
+                    let newId = (transactionsStore.transactions.map { $0.id }.max() ?? 0) + 1
+                    let trimmedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+
+                    let lineItems: [DebtLineItem] = productsStore.products.compactMap { product in
+                        guard let price = product.price,
+                              let qty = quantities[product.id], qty > 0 else { return nil }
+                        return DebtLineItem(productId: product.id, productName: product.name, unitPrice: price, quantity: qty)
                     }
+
+                    let debt = Debt(
+                        id: newId,
+                        totalAmount: computedTotal,
+                        borrowerId: borrowerId,
+                        notes: trimmedNotes.isEmpty ? nil : trimmedNotes,
+                        lineItems: lineItems
+                    )
+                    transactionsStore.transactions.append(debt)
+                    dismiss()
                 }
-
-                Section {
-                    Button("Save") {
-                        guard let borrowerId = selectedBorrowerId,
-                              hasSelectedProducts else { return }
-
-                        let newId = (transactionsStore.transactions.map { $0.id }.max() ?? 0) + 1
-                        let trimmedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
-
-                        let lineItems: [DebtLineItem] = productsStore.products.compactMap { product in
-                            guard let price = product.price,
-                                  let qty = quantities[product.id], qty > 0 else { return nil }
-                            return DebtLineItem(productId: product.id, productName: product.name, unitPrice: price, quantity: qty)
-                        }
-
-                        let debt = Debt(
-                            id: newId,
-                            totalAmount: computedTotal,
-                            borrowerId: borrowerId,
-                            notes: trimmedNotes.isEmpty ? nil : trimmedNotes,
-                            lineItems: lineItems
-                        )
-                        transactionsStore.transactions.append(debt)
-                        dismiss()
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
-                    .disabled(!hasSelectedProducts || selectedBorrowerId == nil)
-                }
+                .buttonStyle(.borderedProminent)
+                .disabled(!hasSelectedProducts || selectedBorrowerId == nil)
+                .frame(maxWidth: .infinity)
             }
+            .padding()
         }
     }
 }

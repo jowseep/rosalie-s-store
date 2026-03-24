@@ -38,9 +38,11 @@ struct AddProductView: View {
                 let trimmedSize = size.trimmingCharacters(in: .whitespacesAndNewlines)
                 guard !trimmedName.isEmpty else { return }
 
+                let parsedPrice = Decimal(string: price.trimmingCharacters(in: .whitespacesAndNewlines))
                 let product = Product(
                     id: newId,
                     name: trimmedName,
+                    price: parsedPrice,
                     categoryId: categoryId,
                     size: trimmedSize.isEmpty ? nil : trimmedSize
                 )

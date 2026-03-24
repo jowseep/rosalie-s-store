@@ -11,6 +11,7 @@ struct BorrowerDashboard: View {
     @Environment(BorrowersStore.self) private var borrowersStore
     @Environment(TransactionsStore.self) private var transactionsStore
     var borrowerId: Int
+    @State private var showAddDebt = false
 
     private var borrower: Borrower? {
         borrowersStore.borrowers.first { $0.id == borrowerId }
@@ -57,7 +58,10 @@ struct BorrowerDashboard: View {
                     }
                 }
                 Button("Add Debt", systemImage: "plus") {
-                    print("Adding debt")
+                    showAddDebt = true
+                }
+                .sheet(isPresented: $showAddDebt) {
+                    AddDebtView(initialBorrowerId: borrowerId)
                 }
             }
 
